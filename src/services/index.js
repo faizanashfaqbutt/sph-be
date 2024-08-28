@@ -2,4 +2,5 @@ module.exports.authService = require('./auth.service');
 module.exports.tokenService = require('./token.service');
 module.exports.userService = require('./user.service');
 module.exports.cragListService = require('./craigList.service');
+module.exports.fbService = require('./fb.service');
 module.exports.productService = require('./product.service');
