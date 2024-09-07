@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const scrapRoute = require('./scrap.route');
 const productRoute = require('./product.route');
+const trendingRoute = require('./trending.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -23,6 +24,10 @@ const defaultRoutes = [
   {
     path:'/products',
     route: productRoute,
+  },
+  {
+    path:'/trending',
+    route: trendingRoute,
   }
 ];
 
