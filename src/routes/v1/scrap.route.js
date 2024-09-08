@@ -9,5 +9,7 @@ router
   .route('/')
   .post(   scrapController.startScrap)
 
-
+  router
+  .route('/jobs')
+  .get(scrapController.getScrapJobList)
 module.exports = router;

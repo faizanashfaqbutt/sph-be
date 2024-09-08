@@ -1,12 +1,10 @@
+const scrapJobService = require('../services/scrapJob.service');
 const { getCondition } = require('../utils/common');
 const puppeteer = require('puppeteer');
 
-async function getCraigListing(user) {
+async function getCraigListing(interest) {
   try {
-    let userIntrests = user?.interests?.map(us => {
-      if (us.platform === 'Crage List') return us
-    });
-    let interest = userIntrests[0]
+   
     console.log(interest.condition?.toLowerCase(),)
     let craiglistCondition = await getCondition(interest.condition?.toLowerCase(),"craiglist")
     let zipCode = Number(interest.zipcode);
@@ -34,11 +32,11 @@ async function getCraigListing(user) {
     await browser.close();
 
     // console.log(scrapeData, 'scrapeData');
-    return scrapeData;
+    return scrapeData
 
   } catch (error) {
+
     console.error(error);
-    // Handle errors appropriately
     throw error; // Rethrow the error to be handled elsewhere if needed
   }
 }
