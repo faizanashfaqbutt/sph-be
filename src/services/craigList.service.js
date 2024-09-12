@@ -5,9 +5,9 @@ const puppeteer = require('puppeteer');
 async function getCraigListing(interest) {
   try {
    
-    console.log(interest.condition?.toLowerCase(),)
-    let craiglistCondition = await getCondition(interest.condition?.toLowerCase(),"craiglist")
-    let zipCode = Number(interest.zipcode);
+    console.log(interest?.condition?.toLowerCase(),)
+    let craiglistCondition = await getCondition(interest?.condition?.toLowerCase(),"craiglist")
+    let zipCode = Number(interest?.zipcode);
     const url = `https://orlando.craigslist.org/search/sss?condition=${craiglistCondition}&max_price=${interest?.max_price}&min_price=${interest?.min_price}&postal=${zipCode}&query=${interest?.keywords}&search_distance=${Number(interest?.radius)}#search=1~gallery~0~0`;
 
     const browser = await puppeteer.launch({

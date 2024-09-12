@@ -26,10 +26,10 @@ const startScrap = catchAsync(async (req, res) => {
    });
 
 
-  // fbService.getFbListing(req.body).then(async (data) => {
-  //   console.log(data)
-  //   //await productService.createBlukProduct(data);
-  // }).catch((err) => { console.log(err) });
+  fbService.getFbListing(req.body).then(async (data) => {
+    console.log(data)
+    //await productService.createBlukProduct(data);
+  }).catch((err) => { console.log(err) });
 
   res.status(200).send({ message: "Scraping started!" });
 });

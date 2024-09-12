@@ -8,7 +8,7 @@ async function getAuthFacebook() {
   const url = 'https://www.facebook.com';
   try {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
@@ -39,7 +39,7 @@ async function loginFacebook(user, { email, pass }) {
   const url = 'https://www.facebook.com/';
   try {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
@@ -125,11 +125,11 @@ async function scrapeMarketPlaceData(browserInstance, user) {
         document.querySelector('[aria-haspopup="listbox"][aria-label="Radius"]').click();
       })
     }
-    let drop = await marketPage.waitForSelector('div.x1i10hfl.xjbqb8w.x6umtig.x1b1mbwd.xaqea5y.xav7gou.xe8uvvx.x1hl2dhg.xggy1nq.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.xjyslct.x9f619.x1ypdohk.x78zum5.x1q0g3np.x2lah0s.xnqzcj9.x1gh759c.xdj266r.xat24cr.x1344otq.x1de53dj.xz9dl7a.xsag5q8.x1n2onr6.x16tdsg8.x1ja2u2z')
-    await marketPage.waitForTimeout(2000)
+    let drop = await marketPage.waitForSelector('div.x1i10hfl.xjbqb8w.x1ejq31n.xd10rxx.x1sy0etr.x17r0tee.x972fbf.xcfux6l.x1qhh985.xm0m39n.xe8uvvx.x1hl2dhg.xggy1nq.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.xjyslct.x9f619.x1ypdohk.x78zum5.x1q0g3np.x2lah0s.x1i6fsjq.xfvfia3.xnqzcj9.x1gh759c.x10wwi4t.x1x7e7qh.x1344otq.x1de53dj.x1n2onr6.x16tdsg8.x1ja2u2z')
+    // await marketPage.waitForTimeout(2000)
     if (drop) {
       await marketPage.evaluate(async (interest) => {
-        const arr = Array.from(document.querySelectorAll('div.x1i10hfl.xjbqb8w.x6umtig.x1b1mbwd.xaqea5y.xav7gou.xe8uvvx.x1hl2dhg.xggy1nq.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.xjyslct.x9f619.x1ypdohk.x78zum5.x1q0g3np.x2lah0s.xnqzcj9.x1gh759c.xdj266r.xat24cr.x1344otq.x1de53dj.xz9dl7a.xsag5q8.x1n2onr6.x16tdsg8.x1ja2u2z'));
+        const arr = Array.from(document.querySelectorAll('div.x1i10hfl.xjbqb8w.x1ejq31n.xd10rxx.x1sy0etr.x17r0tee.x972fbf.xcfux6l.x1qhh985.xm0m39n.xe8uvvx.x1hl2dhg.xggy1nq.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.xjyslct.x9f619.x1ypdohk.x78zum5.x1q0g3np.x2lah0s.x1i6fsjq.xfvfia3.xnqzcj9.x1gh759c.x10wwi4t.x1x7e7qh.x1344otq.x1de53dj.x1n2onr6.x16tdsg8.x1ja2u2z'));
         const value = Number(interest.radius);
         console.log(value, "radius")
         let selectedValue;
@@ -164,25 +164,25 @@ async function scrapeMarketPlaceData(browserInstance, user) {
     }
 
     //Location Input
-    let input = await marketPage.waitForSelector('input[aria-label="Enter a town or city"]');
-    let inputValue = `${interest?.city} ${interest?.state}`
+    let input = await marketPage.waitForSelector('input[aria-label="Location"]');
+    let inputValue = `${interest?.city} ${interest?.state}`;
     await input.type(inputValue);
-    await marketPage.waitForSelector('div.xu96u03.xm80bdy.x10l6tqk.x13vifvy > div')
-    await marketPage.waitForTimeout(2000)
-    await marketPage.click('div.xu96u03.xm80bdy.x10l6tqk.x13vifvy > div.x1jx94hy.x1lq5wgf.xgqcy7u.x30kzoy.x9jhf4c.xbsqzb3.x9f619.x78zum5.xdt5ytf.x1iyjqo2.xr9ek0c.xh8yej3 > div  > ul > li')
-    await marketPage.waitForTimeout(2000)
+    await marketPage.waitForSelector('div.xu96u03.xm80bdy.x10l6tqk.x13vifvy > div', { visible: true });
+    
+    // Replace waitForTimeout with setTimeout for older Puppeteer versions
+     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // document.querySelector("#mount_0_0_nb > div > div:nth-child(1) > div > div:nth-child(5) > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div:nth-child(3) > div > div > div.xu96u03.xm80bdy.x10l6tqk.x13vifvy > div > div > ul > li").click()
-    // document.querySelector("#mount_0_0_nb > div > div:nth-child(1) > div > div:nth-child(5) > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div:nth-child(3) > div > div > div.xu96u03.xm80bdy.x10l6tqk.x13vifvy > div > div > ul > li > div > div").click()
+    // Click on the first suggestion in the dropdown list
+    await marketPage.click('div.xu96u03.xm80bdy.x10l6tqk.x13vifvy > div.x1jx94hy.x1lq5wgf.xgqcy7u.x30kzoy.x9jhf4c.xbsqzb3.x9f619.x78zum5.xdt5ytf.x1iyjqo2.xr9ek0c.xh8yej3 > div > ul > li');
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Use marketPage.evaluate for clicking "Apply"
+    await marketPage.evaluate(() => {
+      document.querySelector('[aria-label="Apply"]')?.click();
+    });
 
-
-    //Actual Working Code
-
-    await marketPage.evaluate(async (interest) => {
-      await document.querySelector('[aria-label="Apply"]')?.click();
-    })
-
-    await marketPage.waitForTimeout(4000)
+    await new Promise(resolve => setTimeout(resolve, 4000));
 
     const marketResults = await marketPage.$$('div.x3ct3a4');
     for (const result of marketResults) {
@@ -226,7 +226,7 @@ async function getFbListing(user) {
   console.log(isLoggedIn, "isLoggedIn")
   let newFacebookData;
   if (isLoggedIn===undefined||isLoggedIn===null) {
-    newFacebookData = await loginFacebook(user, { email: "mooman@karigar.pk", pass: "admin123" });
+    newFacebookData = await loginFacebook(user, { email: "ibtehaj.mughal@yahoo.com", pass: "Uk@6473235" });
   }
   return newFacebookData;
 }
