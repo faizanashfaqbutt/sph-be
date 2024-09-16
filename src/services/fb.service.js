@@ -75,20 +75,21 @@ async function loginFacebook(user, { email, pass }) {
     //   page.click('button[name="login"]'),
     //   page.waitForNavigation()
     // ]);
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 3000));
 
     await page.click('button[name="login"]')
     console.log('login clicked')
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 3000));
     console.log('waiting for navigation')
-    await page.screenshot({ path: 'navgationstarted.png', fullPage: true });
+    // await page.screenshot({ path: 'navgationstarted.png', fullPage: true });
 
     await page.waitForNavigation({timeout: 60000});
 
-    await page.screenshot({ path: 'homepage.png', fullPage: true });
+    // await page.screenshot({ path: 'homepage.png', fullPage: true });
 
     const currentUrl = page.url();
-    if (currentUrl === "https://www.facebook.com/?sk=welcome" || currentUrl === "https://www.facebook.com/") {
+    console.log(currentUrl,'sssss')
+    if (currentUrl === "https://www.facebook.com/?sk=welcome" || currentUrl === "https://www.facebook.com/" || currentUrl === "https://web.facebook.com/?sk=welcome") {
       scrapeFacebook = await scrapeMarketPlaceData(browser, user)
     }
     await browser.close();
@@ -100,6 +101,7 @@ async function loginFacebook(user, { email, pass }) {
 
 async function scrapeMarketPlaceData(browserInstance, user) {
   try {
+    console.log("marketplace")
     //  let interest = user?.interests[0]
     let userIntrests = user?.interests?.map(us => {
       if (us.platform === 'Facebook') return us

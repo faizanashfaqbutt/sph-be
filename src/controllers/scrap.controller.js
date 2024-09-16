@@ -16,20 +16,22 @@ const startScrap = catchAsync(async (req, res) => {
   let interest = userIntrests[0]
   const currentScrapJob = await scrapJobService.createScrapJob({ status: 'pending', platform: user.platform, searchedFor: interest?.keywords });
   
-
-  cragListService.getCraigListing(interest).then(async (scrapeData) => {
+  if(interest?.platform === 'Crage List' ){
+   cragListService.getCraigListing(interest).then(async (scrapeData) => {
     await productService.createBlukProduct(scrapeData);
     await scrapJobService.updateStatus(currentScrapJob._id, 'completed');
   }).catch(async (err) => { 
     await scrapJobService.updateStatus(currentScrapJob._id, 'failed', err);
     console.log(err)
    });
+  }
 
-
-  fbService.getFbListing(req.body).then(async (data) => {
-    console.log(data)
-    //await productService.createBlukProduct(data);
-  }).catch((err) => { console.log(err) });
+  if(interest?.platform === 'Facebook'){
+    fbService.getFbListing(req.body).then(async (data) => {
+      console.log(data)
+      await productService.createBlukProduct(data);
+    }).catch((err) => { console.log(err) });
+  }
 
   res.status(200).send({ message: "Scraping started!" });
 });
